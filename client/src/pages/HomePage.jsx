@@ -76,7 +76,13 @@ function HomePage() {
                     }}>
                     View
                   </button>
-                  <button className="edit-button">Edit</button>
+                  <button
+                    className="edit-button"
+                    onClick={() => {
+                      handleClick(`/edit/${product.id}`);
+                    }}>
+                    Edit
+                  </button>
                 </div>
               </div>
 

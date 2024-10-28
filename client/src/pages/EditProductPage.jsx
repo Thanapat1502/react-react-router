@@ -1,8 +1,9 @@
 import EditProductForm from "../components/EditProductForm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditProductPage() {
   const navigate = useNavigate();
+
   const handleClick = (endpoint) => {
     navigate(endpoint);
   };

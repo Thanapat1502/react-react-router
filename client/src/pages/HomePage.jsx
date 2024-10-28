@@ -7,8 +7,20 @@ function HomePage() {
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const navigate = useNavigate();
+
   const handleClick = (endpoint) => {
     navigate(endpoint);
+  };
+
+  const handleDelete = async (targetId) => {
+    const clonedList = [...products];
+    const updateList = clonedList.filter((item) => {
+      return item.id !== targetId;
+    });
+    const updateData = await axios.delete(
+      `http://localhost:4001/products/${targetId}`
+    );
+    setProducts(updateList);
   };
 
   const getProducts = async () => {
@@ -38,7 +50,10 @@ function HomePage() {
         </button>
       </div>
       <div className="product-list">
-        {products.map((product) => { {/** MAP */}
+        {products.map((product) => {
+          {
+            /** MAP */
+          }
           return (
             <div className="product">
               <div className="product-preview">
@@ -54,12 +69,24 @@ function HomePage() {
                 <h2>Product price: {product.price}</h2>
                 <p>Product description: {product.description} </p>
                 <div className="product-actions">
-                  <button className="view-button" onClick={()=>{handleClick(`/view/${product.id}`)}}>View</button>
+                  <button
+                    className="view-button"
+                    onClick={() => {
+                      handleClick(`/view/${product.id}`);
+                    }}>
+                    View
+                  </button>
                   <button className="edit-button">Edit</button>
                 </div>
               </div>
 
-              <button className="delete-button">x</button>
+              <button
+                className="delete-button"
+                onClick={() => {
+                  handleDelete(product.id);
+                }}>
+                x
+              </button>
             </div>
           );
         })}

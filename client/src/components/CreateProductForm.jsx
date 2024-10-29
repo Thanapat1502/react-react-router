@@ -1,6 +1,37 @@
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function CreateProductForm() {
+  const [product, setProduct] = useState({
+    name: "",
+    image: "",
+    price: "",
+    description: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setProduct({ ...product, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4001/products",
+        product
+      );
+      navigate("/");
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+  };
+
+  const navigate = useNavigate();
+
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={handleSubmit}>
       <h1>Create Product Form</h1>
       <div className="input-container">
         <label>
@@ -10,7 +41,7 @@ function CreateProductForm() {
             name="name"
             type="text"
             placeholder="Enter name here"
-            onChange={() => {}}
+            onChange={handleChange}
           />
         </label>
       </div>
@@ -22,7 +53,7 @@ function CreateProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            onChange={handleChange}
           />
         </label>
       </div>
@@ -34,7 +65,7 @@ function CreateProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            onChange={handleChange}
           />
         </label>
       </div>
@@ -46,7 +77,7 @@ function CreateProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            onChange={handleChange}
             rows={4}
             cols={30}
           />
